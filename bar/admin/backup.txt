@@ -1,0 +1,44 @@
+// reteriving data of custom meta filed
+
+function wporg_custom_box_html( $post_id) {  
+  
+	$value = get_post_meta(get_the_ID(), '_wporg_meta_key', true);
+	echo $value;
+   // var_dump($value);
+   //reteriving bar content form database
+	$get_bar_data = get_option('insert_bar_data');
+	//if (is_page('sample-page')){
+	// if($get_bar_data['bMessage']>0){
+	?>
+	<div class='fixed <?php
+						echo ($get_bar_data['bOption'] == 1) ? "fixed-top" : "fixed-bottom" ?> '>
+		<!-- getting background color -->
+		<div class="container-fluid d-flex  justify-content-center align-items-center p-2 gap-3" style="background-color:<?= $get_bar_data['bColor'] ?>;">
+			<!-- gettting bar message -->
+			<p class="bar_heading h4" style="color:<?= $get_bar_data['fColor'] ?>;"><?= 'hello';// $get_bar_data['bMessage'] ?></p>
+	
+			<!-- getting link button -->
+			<?php if($get_bar_data['bName']>0){
+				?>
+			<a class="bar_button btn btn-primary" href=<?= $get_bar_data['bUrl'] ?> target="_blank"> <?= $get_bar_data['bName'] ?><a/>
+	<?php 
+	}
+	?>
+			<!-- close buttton -->
+			<?php if($get_bar_data['bClose']==true){
+				?>
+				<button type="button" class="btn-close" aria-label="Close" onclick="close_bar();"></button>
+				<?php
+				}
+				?>
+		</div>
+	</div>
+	
+	<?php
+	}
+	//}
+	// }
+	
+   
+    
+add_action('wp_footer','wporg_custom_box_html');
